@@ -28,7 +28,7 @@ public class HitBall : MonoBehaviour
             {
                 hitForce += Time.deltaTime;
             }
-            Debug.Log(hitForce);
+            //Debug.Log(hitForce);
         }
         if (Input.GetMouseButtonUp(0))
         {
