@@ -6,125 +6,95 @@ using UnityEngine;
 
 public class RotateBaseplate : MonoBehaviour
 {
-    public Cinemachine.CinemachineVirtualCamera virtualCamera;
-
     Vector2 mouseDelta;
     Vector2 mouseClamp = new Vector2(0f, 0f);
 
-    Quaternion camOffset;
-    Quaternion rotX;
-    Quaternion rotY;
-    Quaternion rotZ;
+    // comment / uncomment dependent on if you're using smooth turning
+    float timerStart;
+    float timerCurrent;
+    float timerStep;
+    float easeDuration = 4f;
 
     Quaternion targetRot;
     bool rotateY;
-    float targetRotY = 0f;
-    float step;
-    float speed = 60;
+    float currentY = 0f;
+    public float rotSpeed = 100f;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        camOffset = virtualCamera.transform.rotation; 
-        camOffset.x = 0f;
-
-        rotY = Quaternion.Euler(0f, 0f, 0f);
-        targetRot = Quaternion.Euler(0f, targetRotY, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Records mouse movement and clamps both axis between -30 and 30
         mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x, mouseClamp.y + mouseDelta.y);
         mouseClamp.x = Mathf.Clamp(mouseClamp.x, -30f, 30f);
         mouseClamp.y = Mathf.Clamp(mouseClamp.y, -30f, 30f);
 
+        // if statement to check if the object should be rotating on the Y axis
         if (rotateY == false)
         {
+            // checks if currentY has exceeded bounds of 180
+            if (Mathf.Approximately(currentY, 270f))
+            {
+                currentY = -90f;
+            }
+            // sets current rotation
+            if (Mathf.Approximately(currentY, 0f))
+            {
+                transform.rotation = Quaternion.Euler(mouseClamp.y, currentY, -mouseClamp.x);
+            }
+            else if (Mathf.Approximately(currentY, 90f))
+            {
+                transform.rotation = Quaternion.Euler(mouseClamp.x, currentY, mouseClamp.y);
+            }
+            else if (Mathf.Approximately(currentY, 180f))
+            {
+                transform.rotation = Quaternion.Euler(-mouseClamp.y, currentY, mouseClamp.x);
+            }
+            else if (Mathf.Approximately(currentY, -90f))
+            {
+                transform.rotation = Quaternion.Euler(-mouseClamp.x, currentY, -mouseClamp.y);
+            }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 rotateY = true;
-                targetRotY = transform.rotation.y + 90f;
-                targetRot = Quaternion.AngleAxis(targetRotY, Vector3.up);
-            }
+                // set target rotation
+                currentY += 90f;
+                targetRot = Quaternion.Euler(0f, currentY, 0f);
 
-            //transform.rotation = rotX * rotZ;
-            transform.rotation = Quaternion.Euler(mouseClamp.y, targetRotY, -mouseClamp.x);
+                // comment / uncomment dependent on if you're using smooth turning
+                timerStart = Time.time;
+            }
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, speed * Time.deltaTime);
-            //transform.rotation *= Quaternion.AngleAxis(speed, Vector3.up);
-            if (transform.rotation.y == targetRot.y)
+            ////// == Use this if you want to use smooth turning, instead of an ease-in, ease-out effect == \\\\\\
+            //// rotate towards the target rotation, at a speed of (speed * deltatime)
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+            //// checks if the object has reached the target rotation or has exceeded it
+            //if (Mathf.Approximately(transform.rotation.y, targetRot.y))
+            //{
+            //    rotateY = false;
+            //    mouseClamp = new Vector2(transform.rotation.y, transform.rotation.x);
+            //}
+
+            //// == Use this if you want to use turning with an ease-in, ease-out effect == \\\\
+            // calculates current interpolation value for rotation
+            timerCurrent = Time.time - timerStart;
+            timerStep = Mathf.SmoothStep(0f, 1f, timerCurrent / easeDuration);
+            // rotates object
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, timerStep);
+            // checks if the object has reached the target rotation or has exceeded it
+            if (Mathf.Approximately(transform.rotation.y, targetRot.y))
             {
-                rotY.y = targetRot.y;
                 rotateY = false;
-            }
-        }
-    }
-
-    void DEP_rotate()
-    {
-        mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x, mouseClamp.y + mouseDelta.y);
-
-        mouseClamp.x = Mathf.Clamp(mouseClamp.x, -20f, 20f);
-        mouseClamp.y = Mathf.Clamp(mouseClamp.y, -20f, 20f);
-
-        rotX = Quaternion.AngleAxis(mouseClamp.x, camOffset * Vector3.back);
-        rotX.y = 0f;
-        rotY = Quaternion.Euler(1f, 1f, 1f);
-        rotZ = Quaternion.AngleAxis(mouseClamp.y, camOffset * Vector3.right);
-        rotZ.y = 0f;
-
-        transform.rotation = rotX * rotZ;
-
-        Debug.Log("x Rot y axis: " + rotX.y);
-        Debug.Log("z Rot y axis: " + rotZ.y);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("ROTATE!!");
-            rotY *= Quaternion.AngleAxis(20, Vector3.up);
-            //transform.Rotate(0f, 200f, 0f, Space.Self);
-            //transform.rotation *= Quaternion.Euler(1f, 20f, 1f);
-        }
-    }
-
-    void DEP_rotate2()
-    {
-        mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x, mouseClamp.y + mouseDelta.y);
-        mouseClamp.x = Mathf.Clamp(mouseClamp.x, -30f, 30f);
-        mouseClamp.y = Mathf.Clamp(mouseClamp.y, -30f, 30f);
-
-        if (rotateY == false)
-        {
-            rotX = Quaternion.AngleAxis(mouseClamp.y, Vector3.right);
-            rotX.y = 0;
-
-            rotZ = Quaternion.AngleAxis(mouseClamp.x, Vector3.back);
-            rotZ.y = 0;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log("ROTATE!!");
-                rotateY = true;
-                targetRotY = transform.rotation.y + 90f;
-                targetRot = Quaternion.AngleAxis(targetRotY, Vector3.up);
-            }
-
-            transform.rotation = rotX * rotZ;
-        }
-        else
-        {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, speed * Time.deltaTime);
-            //transform.rotation *= Quaternion.AngleAxis(speed, Vector3.up);
-            if (transform.rotation.y == targetRot.y)
-            {
-                rotY.y = targetRot.y;
-                rotateY = false;
+                mouseClamp = new Vector2(transform.rotation.y, transform.rotation.x);
             }
         }
     }
