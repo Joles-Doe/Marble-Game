@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class RotateBaseplate : MonoBehaviour
 {
-    bool focused;
+    public Transform plate;
+    public bool focused;
 
     Vector2 mouseDelta;
     Vector2 mouseClamp = new Vector2(0f, 0f);
@@ -52,19 +53,19 @@ public class RotateBaseplate : MonoBehaviour
                 // sets current rotation
                 if (Mathf.Approximately(currentY, 0f))
                 {
-                    transform.rotation = Quaternion.Euler(mouseClamp.y, currentY, -mouseClamp.x);
+                    plate.rotation = Quaternion.Euler(mouseClamp.y, currentY, -mouseClamp.x);
                 }
                 else if (Mathf.Approximately(currentY, 90f))
                 {
-                    transform.rotation = Quaternion.Euler(mouseClamp.x, currentY, mouseClamp.y);
+                    plate.rotation = Quaternion.Euler(mouseClamp.x, currentY, mouseClamp.y);
                 }
                 else if (Mathf.Approximately(currentY, 180f))
                 {
-                    transform.rotation = Quaternion.Euler(-mouseClamp.y, currentY, mouseClamp.x);
+                    plate.rotation = Quaternion.Euler(-mouseClamp.y, currentY, mouseClamp.x);
                 }
                 else if (Mathf.Approximately(currentY, -90f))
                 {
-                    transform.rotation = Quaternion.Euler(-mouseClamp.x, currentY, -mouseClamp.y);
+                    plate.rotation = Quaternion.Euler(-mouseClamp.x, currentY, -mouseClamp.y);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -82,12 +83,12 @@ public class RotateBaseplate : MonoBehaviour
             {
                 //// == Use this if you want to use smooth turning, instead of an ease-in, ease-out effect == \\\\\\
                 // rotate towards the target rotation, at a speed of (speed * deltatime)
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+                plate.rotation = Quaternion.RotateTowards(plate.rotation, targetRot, rotSpeed * Time.deltaTime);
                 // checks if the object has reached the target rotation or has exceeded it
                 if (Mathf.Approximately(transform.rotation.y, targetRot.y))
                 {
                     rotateY = false;
-                    mouseClamp = new Vector2(transform.rotation.y, transform.rotation.x);
+                    mouseClamp = new Vector2(plate.rotation.y, plate.rotation.x);
                 }
 
                 ////// == Use this if you want to use turning with an ease-in, ease-out effect == \\\\
@@ -95,12 +96,12 @@ public class RotateBaseplate : MonoBehaviour
                 //timerCurrent = Time.time - timerStart;
                 //timerStep = Mathf.SmoothStep(0f, 1f, timerCurrent / easeDuration);
                 //// rotates object
-                //transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, timerStep);
+                //plate.rotation = Quaternion.Slerp(plate.rotation, targetRot, timerStep);
                 //// checks if the object has reached the target rotation or has exceeded it
-                //if (Mathf.Approximately(transform.rotation.y, targetRot.y))
+                //if (Mathf.Approximately(plate.rotation.y, targetRot.y))
                 //{
                 //    rotateY = false;
-                //    mouseClamp = new Vector2(transform.rotation.y, transform.rotation.x);
+                //    mouseClamp = new Vector2(plate.rotation.y, plate.rotation.x);
                 //}
             }
         }
