@@ -25,10 +25,17 @@ public class HUDManager : MonoBehaviour
     public void StartGame()
     {
         gameManager.GameBegin();
+        hudScreen.gameObject.SetActive(true);
     }
 
     public void OpenInstructions()
     {
         instructionsScreen.Activate();
+    }
+
+    public void HUDNextLevelText(string text)
+    {
+        hudScreen.UpdateText(text);
+        hudScreen.move = true;
     }
 }

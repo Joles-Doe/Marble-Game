@@ -7,7 +7,8 @@ using UnityEngine;
 public class RotateBaseplate : MonoBehaviour
 {
     public Transform plate;
-    public bool focused;
+    Rigidbody plateRB;
+    [HideInInspector] public bool focused;
 
     Vector2 mouseDelta;
     Vector2 mouseClamp = new Vector2(0f, 0f);
@@ -19,7 +20,7 @@ public class RotateBaseplate : MonoBehaviour
     //public float easeDuration = 4f;
 
     // comment / uncomment dependent on if you're using smooth turning
-    public float rotSpeed = 100f;
+    public float rotSpeed = 300f;
 
     Quaternion targetRot;
     [HideInInspector] public bool rotateY;
@@ -28,6 +29,8 @@ public class RotateBaseplate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        plateRB = plate.GetComponent<Rigidbody>();
+        plateRB.collisionDetectionMode = CollisionDetectionMode.Discrete;
         focused = false;
     }
 
@@ -36,6 +39,10 @@ public class RotateBaseplate : MonoBehaviour
     {
         if (focused)
         {
+            if (plateRB.collisionDetectionMode != CollisionDetectionMode.Continuous)
+            {
+                plateRB.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
             // Records mouse movement and clamps both axis between -30 and 30
             mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x, mouseClamp.y + mouseDelta.y);
@@ -85,7 +92,7 @@ public class RotateBaseplate : MonoBehaviour
                 // rotate towards the target rotation, at a speed of (speed * deltatime)
                 plate.rotation = Quaternion.RotateTowards(plate.rotation, targetRot, rotSpeed * Time.deltaTime);
                 // checks if the object has reached the target rotation or has exceeded it
-                if (Mathf.Approximately(transform.rotation.y, targetRot.y))
+                if (Mathf.Approximately(plate.transform.rotation.y, targetRot.y))
                 {
                     rotateY = false;
                     mouseClamp = new Vector2(plate.rotation.y, plate.rotation.x);
@@ -103,6 +110,13 @@ public class RotateBaseplate : MonoBehaviour
                 //    rotateY = false;
                 //    mouseClamp = new Vector2(plate.rotation.y, plate.rotation.x);
                 //}
+            }
+        }
+        else
+        {
+            if (plateRB.collisionDetectionMode != CollisionDetectionMode.Discrete)
+            {
+                plateRB.collisionDetectionMode = CollisionDetectionMode.Discrete;
             }
         }
     }

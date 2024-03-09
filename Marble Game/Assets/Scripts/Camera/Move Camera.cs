@@ -33,4 +33,9 @@ public class MoveCamera : MonoBehaviour
         targetPos = new Vector3(targetPos.x, targetPos.y - _distance, targetPos.z);
         move = true;
     }
+
+    public bool IsMoving()
+    {
+        return !move;
+    }
 }
