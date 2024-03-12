@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public void MoveNextLevel()
     {
         currentLevel++;
+        LockCurrentPlate();
         followPoint.NextLevel(42f);
         checkCamera = true;
         HUDManager.HUDNextLevelText($"Level {currentLevel + 1}");
