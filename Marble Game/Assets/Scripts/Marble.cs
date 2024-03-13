@@ -23,6 +23,6 @@ public class Marble : MonoBehaviour
 
     public void MoveDown()
     {
-        rb.AddForce(Vector3.down * 100, ForceMode.Impulse);
+        rb.AddForce(Vector3.down * 20, ForceMode.Impulse);
     }
 }

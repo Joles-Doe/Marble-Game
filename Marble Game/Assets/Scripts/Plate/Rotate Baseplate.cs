@@ -20,7 +20,7 @@ public class RotateBaseplate : MonoBehaviour
     //public float easeDuration = 4f;
 
     // comment / uncomment dependent on if you're using smooth turning
-    public float rotSpeed = 300f;
+    public float rotSpeed = 175f;
 
     Quaternion targetRot;
     [HideInInspector] public bool rotateY;
@@ -74,17 +74,6 @@ public class RotateBaseplate : MonoBehaviour
                 {
                     plate.rotation = Quaternion.Euler(-mouseClamp.x, currentY, -mouseClamp.y);
                 }
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    rotateY = true;
-                    // set target rotation
-                    currentY += 90f;
-                    targetRot = Quaternion.Euler(0f, currentY, 0f);
-
-                    //// comment / uncomment dependent on if you're using smooth turning
-                    //timerStart = Time.time;
-                }
             }
             else
             {
@@ -119,5 +108,17 @@ public class RotateBaseplate : MonoBehaviour
                 plateRB.collisionDetectionMode = CollisionDetectionMode.Discrete;
             }
         }
+    }
+
+    public void Rotate()
+    {
+        rotateY = true;
+
+        // set target rotation
+        currentY += 90f;
+        targetRot = Quaternion.Euler(0f, currentY, 0f);
+
+        //// comment / uncomment dependent on if you're using smooth turning
+        //timerStart = Time.time;
     }
 }

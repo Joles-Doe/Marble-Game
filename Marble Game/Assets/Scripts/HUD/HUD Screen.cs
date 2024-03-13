@@ -6,7 +6,6 @@ using UnityEngine;
 public class HUDScreen : MonoBehaviour
 {
     [HideInInspector] public bool move = false;
-    bool resetPos = true;
 
     Vector3 offscreenTextPos;
     Vector3 movePos;
@@ -29,17 +28,12 @@ public class HUDScreen : MonoBehaviour
     {
         if (move)
         {
-            if (levelTMP.transform.position == movePos)
-            {
-                resetPos = true;
-                move = false;
-            }
-            if (resetPos)
+            levelTMP.transform.position = Vector3.MoveTowards(levelTMP.transform.position, movePos, textSpeed * Time.deltaTime);
+            if (levelTMP.transform.position.x <= -840)//movePos.x)
             {
                 levelTMP.transform.position = offscreenTextPos;
-                resetPos = false;
+                move = false;
             }
-            levelTMP.transform.position = Vector3.MoveTowards(levelTMP.transform.position, movePos, textSpeed * Time.deltaTime);
         }
     }
 

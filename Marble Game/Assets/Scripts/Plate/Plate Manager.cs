@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlateManager : MonoBehaviour
 {
+    public GameManager manager;
+
     List<MarbleSpawn> spawnList = new List<MarbleSpawn>();
 
     [HideInInspector] public bool levelComplete = false;
@@ -50,5 +52,10 @@ public class PlateManager : MonoBehaviour
     public void LoseLife()
     {
         // communicate with game manager
+    }
+
+    public void RotatePlate()
+    {
+        manager.RotateCurrentPlate();
     }
 }

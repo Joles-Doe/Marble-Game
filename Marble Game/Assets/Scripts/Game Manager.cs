@@ -36,13 +36,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (checkCamera)
+        if (currentLevel != -1)
         {
-            if (followPoint.IsMoving())
+            if (plateManagers[currentLevel].levelComplete == true)
             {
-                checkCamera = false;
-                UnlockCurrentPlate();
-                UnlockCurrentSpawners();
+                MoveNextLevel();
+            }
+            if (checkCamera)
+            {
+                if (followPoint.IsMoving())
+                {
+                    checkCamera = false;
+                    UnlockCurrentPlate();
+                    UnlockCurrentSpawners();
+                }
             }
         }
     }
@@ -82,6 +89,11 @@ public class GameManager : MonoBehaviour
     public void LockCurrentPlate()
     {
         plates[currentLevel].focused = false;
+    }
+
+    public void RotateCurrentPlate()
+    {
+        plates[currentLevel].Rotate();
     }
 
     public void UnlockCurrentSpawners()

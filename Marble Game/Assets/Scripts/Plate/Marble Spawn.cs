@@ -38,6 +38,9 @@ public class MarbleSpawn : MonoBehaviour
                     {
                         isActive = false;
                         manager.inactiveSpawners++;
+                        Destroy(marble, 1);
+                        marble = null;
+                        marbleScript = null;
                     }
                     else
                     {
@@ -46,7 +49,9 @@ public class MarbleSpawn : MonoBehaviour
                             manager.LoseLife();
                         }
                         Destroy(marble, 5);
+                        manager.RotatePlate();
                         marble = null;
+                        marbleScript = null;
                         SpawnMarble();
                     }
                 }
