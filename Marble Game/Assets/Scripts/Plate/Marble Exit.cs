@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Holeenter : MonoBehaviour
+public class MarbleExit : MonoBehaviour
 {
     Marble marbleScript;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +17,12 @@ public class Holeenter : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Marble>() != null)
         {
             marbleScript = other.GetComponent<Marble>();
-            marbleScript.canLeave = true;
-            marbleScript.MoveDown();
+            marbleScript.destroy = true;
         }
     }
 }

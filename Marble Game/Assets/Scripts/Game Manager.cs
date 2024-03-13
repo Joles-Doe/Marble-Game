@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
     public HUDManager HUDManager;
     public MoveCamera followPoint;
     public GameObject plateParent;
+
     List<RotateBaseplate> plates = new List<RotateBaseplate>();
+    List<PlateManager> plateManagers = new List<PlateManager>();
 
     int currentLevel = -1;
 
@@ -22,8 +24,11 @@ public class GameManager : MonoBehaviour
         {
             if (child.GetComponent<RotateBaseplate>() != null)
             {
-                Debug.Log(child.name);
                 plates.Add(child.GetComponent<RotateBaseplate>());
+            }
+            if (child.GetComponent<PlateManager>() != null)
+            {
+                plateManagers.Add(child.GetComponent<PlateManager>());
             }
         }
     }
@@ -37,6 +42,7 @@ public class GameManager : MonoBehaviour
             {
                 checkCamera = false;
                 UnlockCurrentPlate();
+                UnlockCurrentSpawners();
             }
         }
     }
@@ -76,5 +82,10 @@ public class GameManager : MonoBehaviour
     public void LockCurrentPlate()
     {
         plates[currentLevel].focused = false;
+    }
+
+    public void UnlockCurrentSpawners()
+    {
+        plateManagers[currentLevel].UnlockSpawners();
     }
 }
