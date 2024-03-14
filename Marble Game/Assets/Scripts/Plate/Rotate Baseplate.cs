@@ -22,9 +22,11 @@ public class RotateBaseplate : MonoBehaviour
     // comment / uncomment dependent on if you're using smooth turning
     public float rotSpeed = 175f;
 
+    public float rotSensitivity;
+
     Quaternion targetRot;
     [HideInInspector] public bool rotateY;
-    float currentY = 0f;
+    float currentY;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,8 @@ public class RotateBaseplate : MonoBehaviour
         plateRB = plate.GetComponent<Rigidbody>();
         plateRB.collisionDetectionMode = CollisionDetectionMode.Discrete;
         focused = false;
+
+        currentY = plate.transform.eulerAngles.y;
     }
 
     // Update is called once per frame
@@ -45,10 +49,10 @@ public class RotateBaseplate : MonoBehaviour
             }
             // Records mouse movement and clamps both axis between -30 and 30
             mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x, mouseClamp.y + mouseDelta.y);
+            mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x * rotSensitivity, mouseClamp.y + mouseDelta.y * rotSensitivity);
             mouseClamp.x = Mathf.Clamp(mouseClamp.x, -60, 60f);
             mouseClamp.y = Mathf.Clamp(mouseClamp.y, -60f, 60f);
-
+            Debug.Log(currentY);
             // if statement to check if the object should be rotating on the Y axis
             if (rotateY == false)
             {
@@ -112,12 +116,14 @@ public class RotateBaseplate : MonoBehaviour
 
     public void Rotate()
     {
-        rotateY = true;
-
         // set target rotation
-        currentY += 90f;
-        targetRot = Quaternion.Euler(0f, currentY, 0f);
-
+        if (rotateY == false)
+        {
+            currentY += 90f;
+            targetRot = Quaternion.Euler(0f, currentY, 0f);
+        }
+        rotateY = true;
+        
         //// comment / uncomment dependent on if you're using smooth turning
         //timerStart = Time.time;
     }
