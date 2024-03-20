@@ -63,18 +63,25 @@ public class GameManager : MonoBehaviour
     public void GamePause()
     {
         Time.timeScale = 0f;
+        plateManagers[currentLevel].activePlate = false;
         LockCurrentPlate();
     }
 
     public void GameResume()
     {
         Time.timeScale = 1f;
+        plateManagers[currentLevel].activePlate = true;
         UnlockCurrentPlate();
     }
 
     public void MoveNextLevel()
     {
+        if (currentLevel != -1)
+        {
+            plateManagers[currentLevel].activePlate = false;
+        }
         currentLevel++;
+        plateManagers[currentLevel].activePlate = true;
         LockCurrentPlate();
         followPoint.NextLevel(42f);
         checkCamera = true;

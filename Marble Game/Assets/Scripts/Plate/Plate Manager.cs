@@ -8,6 +8,7 @@ public class PlateManager : MonoBehaviour
 
     List<MarbleSpawn> spawnList = new List<MarbleSpawn>();
 
+    [HideInInspector] public bool activePlate = false;
     [HideInInspector] public bool levelComplete = false;
 
     int spawnerAmount = 0;
