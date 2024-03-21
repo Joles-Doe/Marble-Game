@@ -52,7 +52,6 @@ public class RotateBaseplate : MonoBehaviour
             mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x * rotSensitivity, mouseClamp.y + mouseDelta.y * rotSensitivity);
             mouseClamp.x = Mathf.Clamp(mouseClamp.x, -60, 60f);
             mouseClamp.y = Mathf.Clamp(mouseClamp.y, -60f, 60f);
-            Debug.Log(currentY);
             // if statement to check if the object should be rotating on the Y axis
             if (rotateY == false)
             {

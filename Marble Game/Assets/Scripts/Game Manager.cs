@@ -42,15 +42,16 @@ public class GameManager : MonoBehaviour
             if (plateManagers[currentLevel].levelComplete == true)
             {
                 MoveNextLevel();
+                timer.StopTick();
             }
             if (checkCamera)
             {
                 if (followPoint.IsMoving())
                 {
                     checkCamera = false;
-                    //timer.StartTick();
                     UnlockCurrentPlate();
                     UnlockCurrentSpawners();
+                    timer.StartTick();
                 }
             }
             if (timer.timerNum <= 0)
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         MoveNextLevel();
+        timer.IncrementTimer(120);
     }
 
     public void GamePause()
