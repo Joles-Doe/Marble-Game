@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public HUDManager HUDManager;
     public MoveCamera followPoint;
     public GameObject plateParent;
+    public Timer timer;
 
     List<RotateBaseplate> plates = new List<RotateBaseplate>();
     List<PlateManager> plateManagers = new List<PlateManager>();
@@ -47,9 +48,14 @@ public class GameManager : MonoBehaviour
                 if (followPoint.IsMoving())
                 {
                     checkCamera = false;
+                    //timer.StartTick();
                     UnlockCurrentPlate();
                     UnlockCurrentSpawners();
                 }
+            }
+            if (timer.timerNum <= 0)
+            {
+                //game over stuff
             }
         }
     }
@@ -64,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         plateManagers[currentLevel].activePlate = false;
+        timer.StopTick();
         LockCurrentPlate();
     }
 
@@ -71,6 +78,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         plateManagers[currentLevel].activePlate = true;
+        timer.StartTick();
         UnlockCurrentPlate();
     }
 
@@ -85,6 +93,7 @@ public class GameManager : MonoBehaviour
         LockCurrentPlate();
         followPoint.NextLevel(42f);
         checkCamera = true;
+        timer.IncrementTimer();
         //HUDManager.HUDNextLevelText(plates[currentLevel].name);
         HUDManager.HUDNextLevelText($"Level {currentLevel + 1}");
     }
