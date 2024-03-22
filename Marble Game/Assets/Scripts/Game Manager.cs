@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public MoveCamera followPoint;
     public GameObject plateParent;
     public Timer timer;
+    public Score score;
 
     List<RotateBaseplate> plates = new List<RotateBaseplate>();
     List<PlateManager> plateManagers = new List<PlateManager>();
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
         {
             if (plateManagers[currentLevel].levelComplete == true)
             {
-                if (plateManagers[currentLevel] == plateManagers[1])
+                if (plateManagers[currentLevel] == plateManagers[0])
                 {
                     HUDManager.OpenEndScreen();
                 }
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour
         if (currentLevel != -1)
         {
             plateManagers[currentLevel].activePlate = false;
+            score.AddScore((currentLevel * 10) + timer.timerNum);
         }
         currentLevel++;
         plateManagers[currentLevel].activePlate = true;

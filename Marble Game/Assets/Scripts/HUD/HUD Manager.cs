@@ -26,18 +26,27 @@ public class HUDManager : MonoBehaviour
     public void StartGame()
     {
         gameManager.GameBegin();
-        hudScreen.gameObject.SetActive(true);
-        endScreen.gameObject.SetActive(false);
+        hudScreen.Activate();
+    }
+
+    public void OpenMenu()
+    {
+        hudScreen.Deactivate();
+        endScreen.Deactivate();
+        menuScreen.Activate();
     }
 
     public void OpenInstructions()
     {
         instructionsScreen.Activate();
+        menuScreen.Deactivate();
     }
 
     public void OpenEndScreen()
     {
         endScreen.Activate();
+        menuScreen.Deactivate();
+        instructionsScreen.gameObject.SetActive(false);
     }
 
     public void HUDNextLevelText(string text)

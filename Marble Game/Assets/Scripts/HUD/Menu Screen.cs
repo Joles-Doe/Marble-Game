@@ -10,12 +10,16 @@ public class MenuScreen : MonoBehaviour
 
     //List<GameObject> screenChildren = new List<GameObject>();
 
+    Canvas canvas;
+
     Button startButton;
     Button instructionsButton;
 
     // Start is called before the first frame update
     void Start()
     {
+        canvas = GetComponent<Canvas>();
+
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name == "Start Button")
@@ -40,12 +44,22 @@ public class MenuScreen : MonoBehaviour
     void startButtonClicked()
     {
         HUDManager.StartGame();
-        gameObject.SetActive(false);
+        Deactivate();
     }
 
     void instructionsButtonClicked()
     {
         HUDManager.OpenInstructions();
-        gameObject.SetActive(false);
+        Deactivate();
+    }
+
+    public void Activate()
+    {
+        canvas.enabled = true;
+    }
+
+    public void Deactivate()
+    {
+        canvas.enabled = false;
     }
 }

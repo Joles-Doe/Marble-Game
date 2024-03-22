@@ -68,5 +68,6 @@ public class PlateManager : MonoBehaviour
             child.haventSpawned = true;
         }
         levelComplete = false;
+        inactiveSpawners = 0;
     }
 }
