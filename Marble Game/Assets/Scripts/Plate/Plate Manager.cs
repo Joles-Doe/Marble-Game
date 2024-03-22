@@ -52,7 +52,7 @@ public class PlateManager : MonoBehaviour
 
     public void LoseLife()
     {
-        // communicate with game manager
+        manager.LoseLife();
     }
 
     public void RotatePlate()

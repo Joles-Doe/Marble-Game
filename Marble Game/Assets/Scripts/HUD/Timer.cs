@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     TextMeshProUGUI timerText;
 
     bool canTick;
-    bool increaseTimer;
+    [HideInInspector]public bool increaseTimer;
 
     [HideInInspector]public int timerNum;
     int timerStart;
@@ -81,7 +81,7 @@ public class Timer : MonoBehaviour
 
     public void IncrementTimer(int target)
     {
-        timerStart = timerNum;
+        timerStart = 0;
         timerTarget = target;
         lerpTimer = 0f;
         increaseTimer = true;

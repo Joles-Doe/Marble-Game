@@ -8,6 +8,7 @@ public class HUDManager : MonoBehaviour
 
     public MenuScreen menuScreen;
     public InstructionsScreen instructionsScreen;
+    public EndScreen endScreen;
     public HUDScreen hudScreen;
 
     // Start is called before the first frame update
@@ -26,11 +27,17 @@ public class HUDManager : MonoBehaviour
     {
         gameManager.GameBegin();
         hudScreen.gameObject.SetActive(true);
+        endScreen.gameObject.SetActive(false);
     }
 
     public void OpenInstructions()
     {
         instructionsScreen.Activate();
+    }
+
+    public void OpenEndScreen()
+    {
+        endScreen.Activate();
     }
 
     public void HUDNextLevelText(string text)

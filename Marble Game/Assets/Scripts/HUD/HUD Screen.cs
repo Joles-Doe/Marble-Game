@@ -10,7 +10,8 @@ public class HUDScreen : MonoBehaviour
     Vector3 offscreenTextPos;
     Vector3 movePos;
 
-    TextMeshProUGUI levelTMP;
+    public TextMeshProUGUI levelTMP;
+    public GameObject gameOverPanel;
 
     public float textSpeed = 20f;
 
@@ -18,7 +19,6 @@ public class HUDScreen : MonoBehaviour
     void Start()
     {
         gameObject.SetActive(false);
-        levelTMP = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         offscreenTextPos = transform.GetChild(0).transform.position;
         movePos = new Vector3(offscreenTextPos.x * -1, offscreenTextPos.y, offscreenTextPos.z);
     }
@@ -41,4 +41,5 @@ public class HUDScreen : MonoBehaviour
     {
         levelTMP.text = level;
     }
+
 }

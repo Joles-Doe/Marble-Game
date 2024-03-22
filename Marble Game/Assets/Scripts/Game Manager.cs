@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     List<PlateManager> plateManagers = new List<PlateManager>();
 
     int currentLevel = -1;
+    int lives = 3;
 
     bool checkCamera = false;
 
@@ -54,9 +55,14 @@ public class GameManager : MonoBehaviour
                     timer.StartTick();
                 }
             }
-            if (timer.timerNum <= 0)
+            if (timer.timerNum <= 0 || lives <= 0)
             {
-                //game over stuff
+                if (timer.increaseTimer == false)
+                {
+                    timer.StopTick();
+                    HUDManager.OpenEndScreen();
+                }
+                
             }
         }
     }
@@ -64,6 +70,12 @@ public class GameManager : MonoBehaviour
     public void GameBegin()
     {
         Time.timeScale = 1f;
+        lives = 3;
+        foreach (RotateBaseplate plate in plates)
+        {
+            plate.Reset();
+        }
+        followPoint.SetPos(50);
         MoveNextLevel();
         timer.IncrementTimer(120);
     }
@@ -118,5 +130,10 @@ public class GameManager : MonoBehaviour
     public void UnlockCurrentSpawners()
     {
         plateManagers[currentLevel].UnlockSpawners();
+    }
+
+    public void LoseLife()
+    {
+        lives--;
     }
 }

@@ -26,6 +26,7 @@ public class RotateBaseplate : MonoBehaviour
 
     Quaternion targetRot;
     [HideInInspector] public bool rotateY;
+    float originY;
     float currentY;
 
     // Start is called before the first frame update
@@ -35,6 +36,7 @@ public class RotateBaseplate : MonoBehaviour
         plateRB.collisionDetectionMode = CollisionDetectionMode.Discrete;
         focused = false;
 
+        originY = plate.transform.eulerAngles.y;
         currentY = plate.transform.eulerAngles.y;
     }
 
@@ -125,5 +127,10 @@ public class RotateBaseplate : MonoBehaviour
         
         //// comment / uncomment dependent on if you're using smooth turning
         //timerStart = Time.time;
+    }
+
+    public void Reset()
+    {
+        plate.transform.rotation = Quaternion.Euler(0f, originY, 0f);
     }
 }

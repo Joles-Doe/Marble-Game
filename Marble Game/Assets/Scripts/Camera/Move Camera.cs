@@ -34,6 +34,11 @@ public class MoveCamera : MonoBehaviour
         move = true;
     }
 
+    public void SetPos(float _pos)
+    {
+        transform.position = new Vector3(transform.position.x, _pos, transform.position.z);
+    }
+
     public bool IsMoving()
     {
         return !move;
