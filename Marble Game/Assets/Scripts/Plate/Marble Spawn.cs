@@ -13,7 +13,7 @@ public class MarbleSpawn : MonoBehaviour
     [HideInInspector] public Marble marbleScript;
 
     [HideInInspector] public bool isActive = false;
-    bool haventSpawned = true;
+    [HideInInspector] public bool haventSpawned = true;
     // Start is called before the first frame update
     void Start()
     {

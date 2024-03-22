@@ -921,6 +921,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &350245680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1535,6 +1536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca3273b53828ce445ba36b6e61f47f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 1824076056}
 --- !u!114 &476607258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,6 +1653,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &493897945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1775,6 +1778,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &497193014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1904,6 +1908,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &619161685
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5131,6 +5136,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &1392448266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5255,6 +5261,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &1400507987
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5978,6 +5985,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &1722966317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6489,6 +6497,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &1916728565
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6883,6 +6892,7 @@ MonoBehaviour:
   marble: {fileID: 0}
   marbleScript: {fileID: 0}
   isActive: 0
+  haventSpawned: 1
 --- !u!65 &2088556547
 BoxCollider:
   m_ObjectHideFlags: 0

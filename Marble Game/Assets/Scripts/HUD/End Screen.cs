@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EndScreen : MonoBehaviour
 {
+    public GameManager manager;
+
     Button restartButton;
 
     // Start is called before the first frame update
@@ -17,7 +19,7 @@ public class EndScreen : MonoBehaviour
                 restartButton = child.GetComponent<Button>();
             }
         }
-        //startButton.onClick.AddListener();
+        restartButton.onClick.AddListener(Restart);
         gameObject.SetActive(false);
     }
 
@@ -30,5 +32,11 @@ public class EndScreen : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
+    }
+
+    void Restart()
+    {
+        manager.GameBegin();
+        gameObject.SetActive(false);
     }
 }

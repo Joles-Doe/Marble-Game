@@ -59,4 +59,14 @@ public class PlateManager : MonoBehaviour
     {
         manager.RotateCurrentPlate();
     }
+
+    public void Reset()
+    {
+        foreach (MarbleSpawn child in spawnList)
+        {
+            child.isActive = false;
+            child.haventSpawned = true;
+        }
+        levelComplete = false;
+    }
 }

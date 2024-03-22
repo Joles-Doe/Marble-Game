@@ -42,7 +42,14 @@ public class GameManager : MonoBehaviour
         {
             if (plateManagers[currentLevel].levelComplete == true)
             {
-                MoveNextLevel();
+                if (plateManagers[currentLevel] == plateManagers[1])
+                {
+                    HUDManager.OpenEndScreen();
+                }
+                else
+                {
+                    MoveNextLevel();
+                }
                 timer.StopTick();
             }
             if (checkCamera)
@@ -70,8 +77,13 @@ public class GameManager : MonoBehaviour
     public void GameBegin()
     {
         Time.timeScale = 1f;
+        currentLevel = -1;
         lives = 3;
         foreach (RotateBaseplate plate in plates)
+        {
+            plate.Reset();
+        }
+        foreach (PlateManager plate in plateManagers)
         {
             plate.Reset();
         }
