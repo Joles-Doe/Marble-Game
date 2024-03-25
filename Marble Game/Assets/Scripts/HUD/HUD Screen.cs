@@ -10,8 +10,6 @@ public class HUDScreen : MonoBehaviour
     Vector3 offscreenTextPos;
     Vector3 movePos;
 
-    Canvas canvas;
-
     public TextMeshProUGUI levelTMP;
     public GameObject gameOverPanel;
 
@@ -20,10 +18,9 @@ public class HUDScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GetComponent<Canvas>();
-        canvas.enabled = false;
         offscreenTextPos = transform.GetChild(0).transform.position;
         movePos = new Vector3(offscreenTextPos.x * -1, offscreenTextPos.y, offscreenTextPos.z);
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -43,15 +40,5 @@ public class HUDScreen : MonoBehaviour
     public void UpdateText(string level)
     {
         levelTMP.text = level;
-    }
-
-    public void Activate()
-    {
-        canvas.enabled = true;
-    }
-
-    public void Deactivate()
-    {
-        canvas.enabled = false;
     }
 }

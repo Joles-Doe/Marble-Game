@@ -8,15 +8,12 @@ public class EndScreen : MonoBehaviour
     public GameManager gameManager;
     public HUDManager HUDManager;
 
-    Canvas canvas;
-
     Button restartButton;
     Button menuButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GetComponent<Canvas>();
 
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
@@ -31,7 +28,7 @@ public class EndScreen : MonoBehaviour
         }
         restartButton.onClick.AddListener(Restart);
         menuButton.onClick.AddListener(OpenMenu);
-        Deactivate();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,26 +37,15 @@ public class EndScreen : MonoBehaviour
         
     }
 
-    public void Activate()
-    {
-        canvas.enabled = true;
-    }
-
-    public void Deactivate()
-    {
-        canvas.enabled = false;
-        Debug.Log(canvas.enabled);
-    }
-
     void Restart()
     {
-        gameManager.GameBegin();
-        Deactivate();
+        HUDManager.StartGame();
+        gameObject.SetActive(false);
     }
 
     void OpenMenu()
     {
-        //HUDManager.OpenMenu();
-        Deactivate();
+        HUDManager.OpenMenu();
+        gameObject.SetActive(false);
     }
 }
