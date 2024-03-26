@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
                 if (plateManagers[currentLevel] == plateManagers[^1])
                 {
                     HUDManager.OpenEndScreen();
+                    LockCurrentPlate();
+                    LockCurrentSpawners();
                     currentLevel = -1;
                 }
                 else
@@ -82,6 +84,8 @@ public class GameManager : MonoBehaviour
                 if (timer.increaseTimer == false)
                 {
                     timer.StopTick();
+                    LockCurrentPlate();
+                    LockCurrentSpawners();
                     HUDManager.OpenEndScreen();
                     currentLevel = -1;
                 }
@@ -108,6 +112,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child);
         }
+        HUDManager.HUDReset();
         followPoint.SetPos(50);
         MoveNextLevel();
         timer.IncrementTimer(120);
@@ -168,8 +173,14 @@ public class GameManager : MonoBehaviour
         plateManagers[currentLevel].UnlockSpawners();
     }
 
+    public void LockCurrentSpawners()
+    {
+        plateManagers[currentLevel].LockSpawners();
+    }
+
     public void LoseLife()
     {
         lives--;
+        HUDManager.HUDLoseLife();
     }
 }

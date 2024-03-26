@@ -70,4 +70,14 @@ public class HUDManager : MonoBehaviour
         hudScreen.UpdateText(text);
         hudScreen.move = true;
     }
+
+    public void HUDLoseLife()
+    {
+        hudScreen.LoseLife();
+    }
+
+    public void HUDReset()
+    {
+        hudScreen.Reset();
+    }
 }

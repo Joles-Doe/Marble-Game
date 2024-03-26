@@ -50,6 +50,14 @@ public class PlateManager : MonoBehaviour
         }
     }
 
+    public void LockSpawners()
+    {
+        foreach (MarbleSpawn spawn in spawnList)
+        {
+            spawn.isActive = false;
+        }
+    }
+
     public void LoseLife()
     {
         manager.LoseLife();
