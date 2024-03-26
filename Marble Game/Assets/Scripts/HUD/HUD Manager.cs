@@ -10,6 +10,7 @@ public class HUDManager : MonoBehaviour
     public InstructionsScreen instructionsScreen;
     public EndScreen endScreen;
     public HUDScreen hudScreen;
+    public PauseScreen pauseScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,21 @@ public class HUDManager : MonoBehaviour
         endScreen.gameObject.SetActive(true);
         menuScreen.gameObject.SetActive(false);
         instructionsScreen.gameObject.SetActive(false);
+    }
+
+    public void PauseGame()
+    {
+        pauseScreen.gameObject.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        pauseScreen.gameObject.SetActive(false);
+    }
+
+    public void ResumeGameFromPause()
+    {
+        gameManager.GameResume();
     }
 
     public void HUDNextLevelText(string text)

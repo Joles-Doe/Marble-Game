@@ -8,9 +8,6 @@ public class MenuScreen : MonoBehaviour
 {
     public HUDManager HUDManager;
 
-    //List<GameObject> screenChildren = new List<GameObject>();
-
-
     Button startButton;
     Button instructionsButton;
 

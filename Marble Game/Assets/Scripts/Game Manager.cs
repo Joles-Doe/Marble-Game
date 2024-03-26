@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     List<RotateBaseplate> plates = new List<RotateBaseplate>();
     List<PlateManager> plateManagers = new List<PlateManager>();
 
+    GameObject[] activeMarbles;
+
     int currentLevel = -1;
     int lives = 3;
 
@@ -41,11 +43,23 @@ public class GameManager : MonoBehaviour
     {
         if (currentLevel != -1)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (Time.timeScale == 1)
+                {
+                    GamePause();
+                }
+                else
+                {
+                    GameResume();
+                }
+            }
             if (plateManagers[currentLevel].levelComplete == true)
             {
-                if (plateManagers[currentLevel] == plateManagers[0])
+                if (plateManagers[currentLevel] == plateManagers[^1])
                 {
                     HUDManager.OpenEndScreen();
+                    currentLevel = -1;
                 }
                 else
                 {
@@ -69,6 +83,7 @@ public class GameManager : MonoBehaviour
                 {
                     timer.StopTick();
                     HUDManager.OpenEndScreen();
+                    currentLevel = -1;
                 }
                 
             }
@@ -88,6 +103,11 @@ public class GameManager : MonoBehaviour
         {
             plate.Reset();
         }
+        activeMarbles = GameObject.FindGameObjectsWithTag("Marble");
+        foreach (GameObject child in activeMarbles)
+        {
+            Destroy(child);
+        }
         followPoint.SetPos(50);
         MoveNextLevel();
         timer.IncrementTimer(120);
@@ -98,6 +118,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         plateManagers[currentLevel].activePlate = false;
         timer.StopTick();
+        HUDManager.PauseGame();
         LockCurrentPlate();
     }
 
@@ -106,6 +127,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         plateManagers[currentLevel].activePlate = true;
         timer.StartTick();
+        HUDManager.ResumeGame();
         UnlockCurrentPlate();
     }
 
