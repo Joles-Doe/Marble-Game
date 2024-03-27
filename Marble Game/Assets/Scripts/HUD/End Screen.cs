@@ -11,6 +11,8 @@ public class EndScreen : MonoBehaviour
     Button restartButton;
     Button menuButton;
 
+    AudioSource tickSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,7 @@ public class EndScreen : MonoBehaviour
         }
         restartButton.onClick.AddListener(Restart);
         menuButton.onClick.AddListener(OpenMenu);
+        tickSound = GetComponent<AudioSource>();
         gameObject.SetActive(false);
     }
 
@@ -40,12 +43,14 @@ public class EndScreen : MonoBehaviour
     void Restart()
     {
         HUDManager.StartGame();
+        tickSound.Play();
         gameObject.SetActive(false);
     }
 
     void OpenMenu()
     {
         HUDManager.OpenMenu();
+        tickSound.Play();
         gameObject.SetActive(false);
     }
 }

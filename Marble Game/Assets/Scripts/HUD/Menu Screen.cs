@@ -11,6 +11,8 @@ public class MenuScreen : MonoBehaviour
     Button startButton;
     Button instructionsButton;
 
+    AudioSource tickSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,7 @@ public class MenuScreen : MonoBehaviour
         }
         startButton.onClick.AddListener(startButtonClicked);
         instructionsButton.onClick.AddListener(instructionsButtonClicked);
+        tickSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -39,11 +42,13 @@ public class MenuScreen : MonoBehaviour
     void startButtonClicked()
     {
         HUDManager.StartGame();
+        tickSound.Play();
         gameObject.SetActive(false);
     }
 
     void instructionsButtonClicked()
     {
         HUDManager.OpenInstructions();
+        tickSound.Play();
     }
 }

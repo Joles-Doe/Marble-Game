@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    AudioSource tickSound;
     TextMeshProUGUI timerText;
 
     bool canTick;
     [HideInInspector]public bool increaseTimer;
 
     [HideInInspector]public int timerNum;
+    int timerOld;
     int timerStart;
     int timerTarget;
 
@@ -26,6 +28,7 @@ public class Timer : MonoBehaviour
     {
         timerNum = 0;
         timerText = GetComponent<TextMeshProUGUI>();
+        tickSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -37,6 +40,12 @@ public class Timer : MonoBehaviour
         {
             lerpTimer += Time.deltaTime / 4;
             timerNum = (int)Mathf.Round(Mathf.Lerp(timerStart, timerTarget, lerpTimer));
+
+            if (timerNum != timerOld)
+            {
+                tickSound.Play();
+                timerOld = timerNum;
+            }
 
             //if (deltaTimer >= incrementTimerDelay)
             //{
@@ -55,6 +64,7 @@ public class Timer : MonoBehaviour
             if (deltaTimer >= 1f)
             {
                 timerNum--;
+                tickSound.Play();
                 deltaTimer = 0f;
             }
         }
@@ -75,6 +85,7 @@ public class Timer : MonoBehaviour
     {
         timerStart = timerNum;
         timerTarget = timerNum + increaseNum;
+        timerOld = 0;
         lerpTimer = 0f;
         increaseTimer = true;
     }
@@ -83,6 +94,7 @@ public class Timer : MonoBehaviour
     {
         timerStart = 0;
         timerTarget = target;
+        timerOld = 0;
         lerpTimer = 0f;
         increaseTimer = true;
     }

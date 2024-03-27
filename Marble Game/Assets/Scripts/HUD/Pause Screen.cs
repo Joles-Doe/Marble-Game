@@ -11,6 +11,8 @@ public class PauseScreen : MonoBehaviour
     Button menuButton;
     Button resumeButton;
 
+    AudioSource tickSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,7 @@ public class PauseScreen : MonoBehaviour
         restartButton.onClick.AddListener(Restart);
         menuButton.onClick.AddListener(OpenMenu);
         resumeButton.onClick.AddListener(Resume);
+        tickSound = GetComponent<AudioSource>();
         gameObject.SetActive(false);
     }
 
@@ -44,17 +47,20 @@ public class PauseScreen : MonoBehaviour
     void Restart()
     {
         HUDManager.StartGame();
+        tickSound.Play();
         gameObject.SetActive(false);
     }
 
     void OpenMenu()
     {
         HUDManager.OpenMenu();
+        tickSound.Play();
         gameObject.SetActive(false);
     }
 
     void Resume()
     {
         HUDManager.ResumeGameFromPause();
+        tickSound.Play();
     }
 }
