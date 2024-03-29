@@ -9,8 +9,10 @@ public class MarbleSpawn : MonoBehaviour
     public bool spawnVital;
     
     public GameObject prefab;
+    public GameObject explosionFX;
     [HideInInspector] public GameObject marble;
     [HideInInspector] public Marble marbleScript;
+    [HideInInspector] public GameObject explosion;
 
     [HideInInspector] public bool isActive = false;
     [HideInInspector] public bool haventSpawned = true;
@@ -38,7 +40,7 @@ public class MarbleSpawn : MonoBehaviour
                     {
                         isActive = false;
                         manager.inactiveSpawners++;
-                        Destroy(marble, 1);
+                        DestroyMarble();
                         marble = null;
                         marbleScript = null;
                     }
@@ -48,7 +50,7 @@ public class MarbleSpawn : MonoBehaviour
                         {
                             manager.LoseLife();
                         }
-                        Destroy(marble, 5);
+                        DestroyMarble();
                         manager.RotatePlate();
                         marble = null;
                         marbleScript = null;
@@ -72,5 +74,13 @@ public class MarbleSpawn : MonoBehaviour
             marble.gameObject.transform.position = transform.position;
             marbleScript = marble.GetComponent<Marble>();
         }
+    }
+
+    void DestroyMarble()
+    {
+        explosion = Instantiate(explosionFX);
+        explosion.transform.position = marble.transform.position;
+        Destroy(marble);
+        Destroy(explosion, 2);
     }
 }

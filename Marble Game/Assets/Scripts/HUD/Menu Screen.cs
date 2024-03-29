@@ -8,10 +8,16 @@ public class MenuScreen : MonoBehaviour
 {
     public HUDManager HUDManager;
 
+    bool firstStartup = true;
+    public float backdropMoveSpeed = 0.04f;
+    int backdropTimer;
+
     Button startButton;
     Button instructionsButton;
 
     AudioSource tickSound;
+
+    List<BackdropMove> backdropMarbles = new List<BackdropMove>();
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +33,10 @@ public class MenuScreen : MonoBehaviour
             {
                 instructionsButton = child.GetComponent<Button>();
             }
+            if (child.GetComponent<BackdropMove>() != null)
+            {
+                backdropMarbles.Add(child.GetComponent<BackdropMove>());
+            }
         }
         startButton.onClick.AddListener(startButtonClicked);
         instructionsButton.onClick.AddListener(instructionsButtonClicked);
@@ -36,7 +46,14 @@ public class MenuScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (firstStartup)
+        {
+            for (int x = 0; x < backdropMarbles.Count; x++)
+            {
+                backdropMarbles[x].Activate(x * 500, backdropMoveSpeed);
+            }
+            firstStartup = false;
+        }
     }
 
     void startButtonClicked()

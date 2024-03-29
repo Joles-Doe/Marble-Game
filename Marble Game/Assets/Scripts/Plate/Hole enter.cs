@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Holeenter : MonoBehaviour
 {
+    public GameObject enterEffect;
+    GameObject currentEffect;
+
     AudioSource enterSound;
     Marble marbleScript;
 
@@ -25,6 +28,9 @@ public class Holeenter : MonoBehaviour
         {
             marbleScript = other.GetComponent<Marble>();
             enterSound.Play();
+            currentEffect = Instantiate(enterEffect);
+            currentEffect.transform.position = transform.position;
+            Destroy(currentEffect, 4);
             marbleScript.canLeave = true;
             marbleScript.MoveDown();
         }
