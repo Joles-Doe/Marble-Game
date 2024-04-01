@@ -16,7 +16,7 @@ public class EndScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //find each specific child and sets listeners for them before setting the object to false
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name == "Restart Button")
@@ -40,6 +40,7 @@ public class EndScreen : MonoBehaviour
         
     }
 
+    //button listener to restart the game
     void Restart()
     {
         HUDManager.StartGame();
@@ -47,6 +48,7 @@ public class EndScreen : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    //button listener to open the main menu
     void OpenMenu()
     {
         HUDManager.OpenMenu();

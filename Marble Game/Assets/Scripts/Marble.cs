@@ -21,6 +21,7 @@ public class Marble : MonoBehaviour
         
     }
 
+    //function that gets called to shoot the marble straight down
     public void MoveDown()
     {
         rb.AddForce(Vector3.down * 20, ForceMode.Impulse);

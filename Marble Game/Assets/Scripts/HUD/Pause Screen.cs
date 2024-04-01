@@ -16,6 +16,7 @@ public class PauseScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //grabs each button and gives it a listener
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name == "Restart Button")
@@ -44,6 +45,7 @@ public class PauseScreen : MonoBehaviour
         
     }
 
+    //listener that calls HUDmanager to restart the game
     void Restart()
     {
         HUDManager.StartGame();
@@ -51,6 +53,7 @@ public class PauseScreen : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    //listener that calls HUDmanager to open the menu
     void OpenMenu()
     {
         HUDManager.OpenMenu();
@@ -58,6 +61,7 @@ public class PauseScreen : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    //listener that calls HUDmanager to resume the game
     void Resume()
     {
         HUDManager.ResumeGameFromPause();

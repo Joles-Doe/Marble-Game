@@ -17,6 +17,7 @@ public class PlateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //grabs each spawner and stores them in a list
         foreach (Transform child in transform.GetChild(0))
         {
             if (child.parent == transform.GetChild(0))
@@ -42,6 +43,7 @@ public class PlateManager : MonoBehaviour
         }
     }
 
+    //unlocks the managed spawners
     public void UnlockSpawners()
     {
         foreach (MarbleSpawn spawn in spawnList)
@@ -50,6 +52,7 @@ public class PlateManager : MonoBehaviour
         }
     }
 
+    //locks the managed spawners
     public void LockSpawners()
     {
         foreach (MarbleSpawn spawn in spawnList)
@@ -58,16 +61,19 @@ public class PlateManager : MonoBehaviour
         }
     }
 
+    //communicates to the manager that a vital marble has fallen
     public void LoseLife()
     {
         manager.LoseLife();
     }
 
+    //communicates to the manager that the plate needs to be rotated
     public void RotatePlate()
     {
         manager.RotateCurrentPlate();
     }
 
+    //resets the spawners
     public void Reset()
     {
         foreach (MarbleSpawn child in spawnList)

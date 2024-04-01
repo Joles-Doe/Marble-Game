@@ -10,10 +10,9 @@ public class MenuScreen : MonoBehaviour
 
     bool firstStartup = true;
     public float backdropMoveSpeed = 0.04f;
-    int backdropTimer;
 
     Button startButton;
-    Button instructionsButton;
+    Button settingsButton;
 
     AudioSource tickSound;
 
@@ -22,16 +21,16 @@ public class MenuScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //grabs all of the necessary components and adds listeners
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name == "Start Button")
             {
                 startButton = child.GetComponent<Button>();
             }
-            if (child.name == "Instructions Button")
+            if (child.name == "Settings Button")
             {
-                instructionsButton = child.GetComponent<Button>();
+                settingsButton = child.GetComponent<Button>();
             }
             if (child.GetComponent<BackdropMove>() != null)
             {
@@ -39,13 +38,14 @@ public class MenuScreen : MonoBehaviour
             }
         }
         startButton.onClick.AddListener(startButtonClicked);
-        instructionsButton.onClick.AddListener(instructionsButtonClicked);
+        settingsButton.onClick.AddListener(SettingsButtonClicked);
         tickSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //upon first startup, spawn the balls the move across the menu
         if (firstStartup)
         {
             for (int x = 0; x < backdropMarbles.Count; x++)
@@ -56,6 +56,7 @@ public class MenuScreen : MonoBehaviour
         }
     }
 
+    //listener to start the game
     void startButtonClicked()
     {
         HUDManager.StartGame();
@@ -63,9 +64,10 @@ public class MenuScreen : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void instructionsButtonClicked()
+    //listener to open the settings menu
+    void SettingsButtonClicked()
     {
-        HUDManager.OpenInstructions();
+        HUDManager.OpenSettings();
         tickSound.Play();
     }
 }

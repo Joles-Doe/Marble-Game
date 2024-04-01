@@ -22,6 +22,7 @@ public class Holeenter : MonoBehaviour
         
     }
 
+    //trigger function that shoots the marble downwards and creates a VFX to indicate the ball has gone through the hole
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Marble>() != null)

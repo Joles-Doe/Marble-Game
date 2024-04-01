@@ -8,6 +8,7 @@ public class RotateBaseplate : MonoBehaviour
     public Transform plate;
     Rigidbody plateRB;
     [HideInInspector] public bool focused;
+    [HideInInspector] public bool invert;
 
     Vector2 mouseDelta;
     Vector2 mouseClamp = new Vector2(0f, 0f);
@@ -50,6 +51,10 @@ public class RotateBaseplate : MonoBehaviour
             }
             // Records mouse movement and clamps both axis between -30 and 30
             mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            if (invert)
+            {
+                mouseDelta.y = -mouseDelta.y;
+            }
             mouseClamp = new Vector2(mouseClamp.x + mouseDelta.x * rotSensitivity, mouseClamp.y + mouseDelta.y * rotSensitivity);
             mouseClamp.x = Mathf.Clamp(mouseClamp.x, -60, 60f);
             mouseClamp.y = Mathf.Clamp(mouseClamp.y, -60f, 60f);

@@ -19,6 +19,7 @@ public class MarbleExit : MonoBehaviour
         
     }
 
+    //trigger function that destroys the marble once it leaves the boundary
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Marble>() != null)

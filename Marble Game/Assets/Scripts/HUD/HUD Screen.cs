@@ -23,6 +23,8 @@ public class HUDScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //grabs needed components and sets variables for the level text
+
         offscreenTextPos = transform.GetChild(0).transform.position;
         movePos = new Vector3(offscreenTextPos.x * -1, offscreenTextPos.y, offscreenTextPos.z);
 
@@ -40,6 +42,7 @@ public class HUDScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if move is true, move the text across the screen
         if (move)
         {
             levelTMP.transform.position = Vector3.MoveTowards(levelTMP.transform.position, movePos, textSpeed * Time.deltaTime);
@@ -49,6 +52,7 @@ public class HUDScreen : MonoBehaviour
                 move = false;
             }
         }
+        //if colorChange is true, sets a functional heart to black
         if (colorChange)
         {
             lerpTimer += Time.deltaTime * 1.5f;
@@ -60,11 +64,13 @@ public class HUDScreen : MonoBehaviour
         }
     }
 
+    //updates text
     public void UpdateText(string level)
     {
         levelTMP.text = level;
     }
 
+    //sets colorChange to true and reduces the index
     public void LoseLife()
     {
         if (heartsIndex > 0)
@@ -75,6 +81,7 @@ public class HUDScreen : MonoBehaviour
         }
     }
 
+    //resets the hearts
     public void Reset()
     {
         heartsIndex = 3;

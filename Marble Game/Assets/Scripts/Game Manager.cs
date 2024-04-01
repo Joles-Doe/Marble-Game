@@ -20,16 +20,20 @@ public class GameManager : MonoBehaviour
 
     bool checkCamera = false;
 
+    [HideInInspector] public bool invertY;
+
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0f;
-
+        //grabs all of the necessary components
         foreach (Transform child in plateParent.GetComponentsInChildren<Transform>())
         {
             if (child.GetComponent<RotateBaseplate>() != null)
             {
-                plates.Add(child.GetComponent<RotateBaseplate>());
+                if (child.name != "Settings Plate")
+                {
+                    plates.Add(child.GetComponent<RotateBaseplate>());
+                }
             }
             if (child.GetComponent<PlateManager>() != null)
             {
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentLevel != -1)
         {
+            //open the menu if escape is pressed
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (Time.timeScale == 1)
@@ -54,8 +59,10 @@ public class GameManager : MonoBehaviour
                     GameResume();
                 }
             }
+            //move to the next level if the current level has been completed
             if (plateManagers[currentLevel].levelComplete == true)
             {
+                //if the plate is the final one in the array, end the game
                 if (plateManagers[currentLevel] == plateManagers[^1])
                 {
                     HUDManager.OpenEndScreen();
@@ -69,8 +76,10 @@ public class GameManager : MonoBehaviour
                 }
                 timer.StopTick();
             }
+            //if the camera is moving
             if (checkCamera)
             {
+                //once the camera stops moving, unlock the plate and start the timer
                 if (followPoint.IsMoving())
                 {
                     checkCamera = false;
@@ -79,6 +88,7 @@ public class GameManager : MonoBehaviour
                     timer.StartTick();
                 }
             }
+            //if the timer reaches 0 or if the player runs out of lives
             if (timer.timerNum <= 0 || lives <= 0)
             {
                 if (timer.increaseTimer == false)
@@ -94,6 +104,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //function to begin the game - sets the timescale to 1 and resets everything to default values
     public void GameBegin()
     {
         Time.timeScale = 1f;
@@ -118,6 +129,7 @@ public class GameManager : MonoBehaviour
         timer.IncrementTimer(120);
     }
 
+    //function to freeze time, plate rotations and timer
     public void GamePause()
     {
         Time.timeScale = 0f;
@@ -127,6 +139,7 @@ public class GameManager : MonoBehaviour
         LockCurrentPlate();
     }
 
+    //function to resume time, plate rotations and timer
     public void GameResume()
     {
         Time.timeScale = 1f;
@@ -136,6 +149,7 @@ public class GameManager : MonoBehaviour
         UnlockCurrentPlate();
     }
 
+    //function to send relevant information to different components on the next level
     public void MoveNextLevel()
     {
         if (currentLevel != -1)
@@ -153,34 +167,50 @@ public class GameManager : MonoBehaviour
         HUDManager.HUDNextLevelText($"Level {currentLevel + 1}");
     }
 
+    //unlocks the current plate
     public void UnlockCurrentPlate()
     {
         plates[currentLevel].focused = true;
     }
 
+    //locks the current plate
     public void LockCurrentPlate()
     {
         plates[currentLevel].focused = false;
     }
 
+    //rotates the current plate by 90*
     public void RotateCurrentPlate()
     {
         plates[currentLevel].Rotate();
     }
 
+    //unlocks current ball spawners
     public void UnlockCurrentSpawners()
     {
         plateManagers[currentLevel].UnlockSpawners();
     }
 
+    //locks current ball spawners
     public void LockCurrentSpawners()
     {
         plateManagers[currentLevel].LockSpawners();
     }
 
+    //reduces lives and sends information to HUD
     public void LoseLife()
     {
         lives--;
         HUDManager.HUDLoseLife();
+    }
+
+    //inverts the current way of rotation for the Y axis for all plates
+    public void SettingsInvertY()
+    {
+        invertY = !invertY;
+        foreach (RotateBaseplate plate in plates)
+        {
+            plate.invert = invertY;
+        }
     }
 }

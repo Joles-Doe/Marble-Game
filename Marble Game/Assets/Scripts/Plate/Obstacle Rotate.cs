@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObstacleRotate : MonoBehaviour
 {
+    //simple script to smoothly rotate the attached object
+
     public PlateManager manager;
 
     public float rotSpeed;

@@ -34,10 +34,12 @@ public class MarbleSpawn : MonoBehaviour
             }
             else if (marbleScript != null)
             {
+                //if the marble needs to be destroyed, check if it went through the hole and react accordingly
                 if (marbleScript.destroy)
                 {
                     if (marbleScript.canLeave)
                     {
+                        //makes the spawner the marble came from inactive
                         isActive = false;
                         manager.inactiveSpawners++;
                         DestroyMarble();
@@ -48,6 +50,7 @@ public class MarbleSpawn : MonoBehaviour
                     {
                         if (spawnVital)
                         {
+                            //lose a life if the marble was a vital one
                             manager.LoseLife();
                         }
                         DestroyMarble();
@@ -61,11 +64,13 @@ public class MarbleSpawn : MonoBehaviour
         }
     }
 
+    //function that uses the invoke command to spawn a marble with a delay
     public void SpawnMarble()
     {
         Invoke("InvokeSpawn", 1f);
     }
 
+    //function to spawn the marble
     void InvokeSpawn()
     {
         if (marble == null)
@@ -76,6 +81,7 @@ public class MarbleSpawn : MonoBehaviour
         }
     }
 
+    //function to destroy the marble
     void DestroyMarble()
     {
         explosion = Instantiate(explosionFX);
