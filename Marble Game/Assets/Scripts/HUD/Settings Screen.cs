@@ -44,6 +44,7 @@ public class SettingsScreen : MonoBehaviour
     //changes the camera view to the settings camera and allows the plate to be moved
     public void Activate()
     {
+        settingsPlate.invert = GameManager.invertY;
         settingsCam.Priority = 20;
         settingsPlate.focused = true;
     }
@@ -58,6 +59,15 @@ public class SettingsScreen : MonoBehaviour
     //calls a function in game manager to invert the Y axis
     public void InvertButtonClicked()
     {
+        if (GameManager.invertY == false)
+        {
+            PlayerPrefs.SetInt("invertY", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("invertY", 0);
+        }
+        GameManager.invertY = !GameManager.invertY;
         GameManager.SettingsInvertY();
         settingsPlate.invert = GameManager.invertY;
     }

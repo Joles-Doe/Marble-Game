@@ -40,6 +40,24 @@ public class GameManager : MonoBehaviour
                 plateManagers.Add(child.GetComponent<PlateManager>());
             }
         }
+        //grabs settings, if they exist
+        if (PlayerPrefs.HasKey("invertY"))
+        {
+            if (PlayerPrefs.GetInt("invertY") == 0)
+            {
+                invertY = false;
+            }
+            else
+            {
+                invertY = true;
+                SettingsInvertY();
+            }
+        }
+        else
+        {
+            invertY = false;
+            PlayerPrefs.SetInt("invertY", 0);
+        }
     }
 
     // Update is called once per frame
@@ -207,7 +225,6 @@ public class GameManager : MonoBehaviour
     //inverts the current way of rotation for the Y axis for all plates
     public void SettingsInvertY()
     {
-        invertY = !invertY;
         foreach (RotateBaseplate plate in plates)
         {
             plate.invert = invertY;

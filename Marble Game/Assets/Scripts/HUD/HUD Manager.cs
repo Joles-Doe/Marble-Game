@@ -31,6 +31,7 @@ public class HUDManager : MonoBehaviour
     //function to disable the menu, communicates with the game manager and opens the HUD
     public void StartGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         gameManager.GameBegin();
         if (menuMusics[0].isPlaying)
         {
@@ -46,6 +47,7 @@ public class HUDManager : MonoBehaviour
     //function to disable every other screen and open the menu
     public void OpenMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
         hudScreen.gameObject.SetActive(false);
         endScreen.gameObject.SetActive(false);
         menuScreen.gameObject.SetActive(true);
@@ -62,6 +64,7 @@ public class HUDManager : MonoBehaviour
     //function to disable every other screen and open the settings menu
     public void OpenSettings()
     {
+        Cursor.lockState = CursorLockMode.None;
         settingsScreen.gameObject.SetActive(true);
         settingsScreen.Activate();
         menuScreen.gameObject.SetActive(false);
@@ -70,6 +73,7 @@ public class HUDManager : MonoBehaviour
     //function to disable every other screen except the HUD and open the ending screen
     public void OpenEndScreen()
     {
+        Cursor.lockState = CursorLockMode.None;
         endScreen.gameObject.SetActive(true);
         menuScreen.gameObject.SetActive(false);
         settingsScreen.gameObject.SetActive(false);
@@ -78,18 +82,21 @@ public class HUDManager : MonoBehaviour
     //function to open the pause menu
     public void PauseGame()
     {
+        Cursor.lockState = CursorLockMode.None;
         pauseScreen.gameObject.SetActive(true);
     }
 
     //function to close the pause menu
     public void ResumeGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         pauseScreen.gameObject.SetActive(false);
     }
 
     //function that tells the game manager that the resume button has been pressed in the pause menu
     public void ResumeGameFromPause()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         gameManager.GameResume();
     }
 
