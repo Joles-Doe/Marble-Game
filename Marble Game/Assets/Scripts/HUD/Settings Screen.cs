@@ -13,6 +13,10 @@ public class SettingsScreen : MonoBehaviour
 
     Button invertButton;
     Button returnButton;
+    Slider volumeSlider;
+    Slider sensSlider;
+
+    bool ignoreEvent = true;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +32,20 @@ public class SettingsScreen : MonoBehaviour
             {
                 returnButton = child.GetComponent<Button>();
             }
+            if (child.name == "Volume Slider")
+            {
+                volumeSlider = child.GetComponent<Slider>();
+            }
+            if (child.name == "Sensitivity Slider")
+            {
+                sensSlider = child.GetComponent<Slider>();
+            }
         }
         invertButton.onClick.AddListener(InvertButtonClicked);
         returnButton.onClick.AddListener(ReturnButtonClicked);
-
+        volumeSlider.value = GameManager.audioSliderValue;
+        sensSlider.value = GameManager.audioSliderValue;
+        ignoreEvent = false;
         gameObject.SetActive(false);
     }
 
@@ -44,6 +58,9 @@ public class SettingsScreen : MonoBehaviour
     //changes the camera view to the settings camera and allows the plate to be moved
     public void Activate()
     {
+        volumeSlider.value = GameManager.audioSliderValue;
+        sensSlider.value = GameManager.sensSliderValue;
+        settingsPlate.rotSensitivity = sensSlider.value;
         settingsPlate.invert = GameManager.invertY;
         settingsCam.Priority = 20;
         settingsPlate.focused = true;
@@ -78,5 +95,24 @@ public class SettingsScreen : MonoBehaviour
         Deactivate();
         HUDManager.OpenMenu();
         gameObject.SetActive(false);
+    }
+
+    //function to react when the volume slider is changed
+    public void VolumeChanged()
+    {
+        if (!ignoreEvent)
+        {
+            GameManager.SettingsChangeVolume((int)volumeSlider.value);
+        }
+    }
+
+    //function to react when the sens slider is changed
+    public void SensitivityChanged()
+    {
+        if (!ignoreEvent)
+        {
+            GameManager.SettingsChangeSensitivity(sensSlider.value);
+            settingsPlate.rotSensitivity = sensSlider.value;
+        }
     }
 }

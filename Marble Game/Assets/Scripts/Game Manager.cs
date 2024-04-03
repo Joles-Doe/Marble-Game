@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     bool checkCamera = false;
 
+    public AudioMixer audio;
+    [HideInInspector] public int audioSliderValue;
+    [HideInInspector] public float sensSliderValue;
     [HideInInspector] public bool invertY;
 
     // Start is called before the first frame update
@@ -58,6 +62,27 @@ public class GameManager : MonoBehaviour
             invertY = false;
             PlayerPrefs.SetInt("invertY", 0);
         }
+        if (PlayerPrefs.HasKey("volume"))
+        {
+            audioSliderValue = PlayerPrefs.GetInt("volume", 80);
+            audio.SetFloat("volume", -80 + audioSliderValue);
+        }
+        else
+        {
+            audioSliderValue = 80;
+            SettingsChangeVolume(audioSliderValue);
+        }
+        if (PlayerPrefs.HasKey("sensitivity"))
+        {
+            sensSliderValue = PlayerPrefs.GetFloat("sensitivity", 0.3f);
+            SettingsChangeSensitivity(sensSliderValue);
+        }
+        else
+        {
+            sensSliderValue = 0.3f;
+            SettingsChangeSensitivity(sensSliderValue);
+        }
+        
     }
 
     // Update is called once per frame
@@ -228,6 +253,23 @@ public class GameManager : MonoBehaviour
         foreach (RotateBaseplate plate in plates)
         {
             plate.invert = invertY;
+        }
+    }
+
+    //sets the current slider value in settings to game volume
+    public void SettingsChangeVolume(int _input)
+    {
+        PlayerPrefs.SetInt("volume", _input);
+        audio.SetFloat("volume", -80 + _input);
+    }
+
+    //sets the sensitivity slider value in settings to game sensitivity
+    public void SettingsChangeSensitivity(float _input)
+    {
+        PlayerPrefs.SetFloat("sensitivity", _input);
+        foreach (RotateBaseplate plate in plates)
+        {
+            plate.rotSensitivity = _input;
         }
     }
 }
