@@ -24,15 +24,16 @@ public class HUDScreen : MonoBehaviour
     void Start()
     {
         //grabs needed components and sets variables for the level text
-
-        offscreenTextPos = transform.GetChild(0).transform.position;
-        movePos = new Vector3(offscreenTextPos.x * -1, offscreenTextPos.y, offscreenTextPos.z);
-
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (child.name == "Heart")
             {
                 hearts.Add(child.GetComponent<Image>());
+            }
+            if (child.name == "Level Text")
+            {
+                offscreenTextPos = child.transform.position;
+                movePos = new Vector3(offscreenTextPos.x * -1, offscreenTextPos.y, offscreenTextPos.z);
             }
         }
 
@@ -42,16 +43,17 @@ public class HUDScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ///Level text moving breaks on build, so this is commented out
         //if move is true, move the text across the screen
-        if (move)
-        {
-            levelTMP.transform.position = Vector3.MoveTowards(levelTMP.transform.position, movePos, textSpeed * Time.deltaTime);
-            if (levelTMP.transform.position.x <= -840)//movePos.x)
-            {
-                levelTMP.transform.position = offscreenTextPos;
-                move = false;
-            }
-        }
+        //if (move)
+        //{
+        //    levelTMP.transform.position = Vector3.MoveTowards(levelTMP.transform.position, movePos, textSpeed * Time.deltaTime);
+        //    if (levelTMP.transform.position.x <= -840)
+        //    {
+        //        levelTMP.transform.position = offscreenTextPos;
+        //        move = false;
+        //    }
+        //}
         //if colorChange is true, sets a functional heart to black
         if (colorChange)
         {
@@ -87,7 +89,7 @@ public class HUDScreen : MonoBehaviour
         heartsIndex = 3;
         for (int x = 0; x < hearts.Count; x++)
         {
-            hearts[0].color = Color.white;
+            hearts[x].color = Color.white;
         }
     }
 }

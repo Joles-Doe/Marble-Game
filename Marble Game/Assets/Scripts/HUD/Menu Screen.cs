@@ -50,7 +50,7 @@ public class MenuScreen : MonoBehaviour
         {
             for (int x = 0; x < backdropMarbles.Count; x++)
             {
-                backdropMarbles[x].Activate(x * 500, backdropMoveSpeed);
+                backdropMarbles[x].Activate(500, backdropMoveSpeed);
             }
             firstStartup = false;
         }

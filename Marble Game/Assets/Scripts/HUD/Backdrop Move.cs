@@ -14,12 +14,15 @@ public class BackdropMove : MonoBehaviour
     bool moveFirst = true;
     bool move;
 
+    RectTransform parentTransform;
+
     Vector2 originPos;
     Vector2 targetPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        parentTransform = GetComponentInParent<RectTransform>();
         // initializes variables
         if (moveDown)
         {
@@ -32,6 +35,7 @@ public class BackdropMove : MonoBehaviour
             originPos = transform.position;
             targetPos = new Vector2(transform.position.x, transform.position.y + 205);
             transform.position = new Vector2(transform.position.x, transform.position.y * -2);
+            //transform.position = new Vector2(transform.position.x, -parentTransform.rect.height);
         }
     }
 
