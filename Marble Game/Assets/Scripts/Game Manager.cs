@@ -260,6 +260,7 @@ public class GameManager : MonoBehaviour
     public void SettingsChangeVolume(int _input)
     {
         PlayerPrefs.SetInt("volume", _input);
+        audioSliderValue = _input;
         audio.SetFloat("volume", -80 + _input);
     }
 
@@ -267,6 +268,7 @@ public class GameManager : MonoBehaviour
     public void SettingsChangeSensitivity(float _input)
     {
         PlayerPrefs.SetFloat("sensitivity", _input);
+        sensSliderValue = _input;
         foreach (RotateBaseplate plate in plates)
         {
             plate.rotSensitivity = _input;
